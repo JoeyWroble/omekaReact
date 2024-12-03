@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { useState } from 'react';
+import API from './hms.js';
+ 
 function App() {
+  const apiEndpoint = 'https://morrisarchive.lib.uiowa.edu/api/';
+  const [output, setOutput] = useState()
+ 
+  const getSiteInfo = async () => {
+      setOutput('Fetching site info...');
+      const data = await API.getSiteInfo(apiEndpoint);
+      setOutput(JSON.stringify(data, null, 2));
+  };
+ 
+  const getItems = async () => {
+      setOutput('Fetching items...');
+      const data = await API.getItems(apiEndpoint);
+      setOutput(JSON.stringify(data, null, 2));
+  };
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div classname="body">
+        <h1>HMS API Test</h1>
+          <div>
+            <button onClick={getSiteInfo}>Get Site Info</button>
+            <button onClick={getItems} >Get Items</button>
+            <pre className="output">{output}</pre>
+          </div>
+      </div>
   );
 }
-
+ 
 export default App;
+ 
+ 
