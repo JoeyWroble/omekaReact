@@ -4,6 +4,7 @@ import API from './hms.js';
  
 function App() {
   const apiEndpoint = 'https://morrisarchive.lib.uiowa.edu/api/';
+  const collectionEndpoint = 'https://morrisarchive.lib.uiowa.edu/api/files?item=11';
   const [output, setOutput] = useState()
  
   const getSiteInfo = async () => {
@@ -17,6 +18,12 @@ function App() {
       const data = await API.getItems(apiEndpoint);
       setOutput(JSON.stringify(data, null, 2));
   };
+
+  const getItemsInCollection = async () => {
+    setOutput('Fetching items in collection...');
+    const data = await API.getItemsInCollection(collectionEndpoint)
+    setOutput(JSON.stringify(data, null, 2));
+  }
  
   return (
       <div classname="body">
@@ -24,6 +31,7 @@ function App() {
           <div>
             <button onClick={getSiteInfo}>Get Site Info</button>
             <button onClick={getItems} >Get Items</button>
+            <button onClick={getItemsInCollection}>Get Items in Collection</button>
             <pre className="output">{output}</pre>
           </div>
       </div>
